@@ -4,4 +4,13 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AchieveIt.DataAccess\AchieveIt.DataAccess.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+      <PackageReference Include="Kirpichyov.FriendlyJwt" Version="1.0.0" />
+    </ItemGroup>
+
 </Project>

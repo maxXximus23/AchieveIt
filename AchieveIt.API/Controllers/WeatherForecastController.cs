@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using AchieveIt.DataAccess;
+using AchieveIt.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,6 +12,7 @@ namespace AchieveIt.API.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private readonly DatabaseContext _context;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -18,9 +20,10 @@ namespace AchieveIt.API.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, DatabaseContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
@@ -34,6 +37,12 @@ namespace AchieveIt.API.Controllers
                     Summary = Summaries[rng.Next(Summaries.Length)]
                 })
                 .ToArray();
+        }
+        
+        [HttpGet("GetUser")]
+        public User[] GetUser()
+        {
+            return _context.Users.ToArray();
         }
     }
 }
