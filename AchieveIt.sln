@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchieveIt.API", "AchieveIt.API\AchieveIt.API.csproj", "{EA9053FC-0603-48D3-A13F-B967B2EFF0BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchieveIt.DataAccess", "AchieveIt.DataAccess\AchieveIt.DataAccess.csproj", "{370BA95D-EC1D-4DF7-897B-9F590E28B850}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchieveIt.BusinessLogic", "AchieveIt.BusinessLogic\AchieveIt.BusinessLogic.csproj", "{48227747-8049-4C2F-98CC-1D738B1C474E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA9053FC-0603-48D3-A13F-B967B2EFF0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9053FC-0603-48D3-A13F-B967B2EFF0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9053FC-0603-48D3-A13F-B967B2EFF0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9053FC-0603-48D3-A13F-B967B2EFF0BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{370BA95D-EC1D-4DF7-897B-9F590E28B850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{370BA95D-EC1D-4DF7-897B-9F590E28B850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{370BA95D-EC1D-4DF7-897B-9F590E28B850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{370BA95D-EC1D-4DF7-897B-9F590E28B850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48227747-8049-4C2F-98CC-1D738B1C474E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48227747-8049-4C2F-98CC-1D738B1C474E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48227747-8049-4C2F-98CC-1D738B1C474E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48227747-8049-4C2F-98CC-1D738B1C474E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
