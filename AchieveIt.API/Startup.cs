@@ -1,5 +1,6 @@
 using System;
 using AchieveIt.BusinessLogic.Contracts;
+using AchieveIt.BusinessLogic.Profiles;
 using AchieveIt.BusinessLogic.Services;
 using AchieveIt.DataAccess;
 using AchieveIt.DataAccess.UnitOfWork;
@@ -29,6 +30,12 @@ namespace AchieveIt.API
         {
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
+            services.AddAutoMapper(
+                typeof(AchieveIt.BusinessLogic.Profiles.UserProfile), 
+                typeof(AchieveIt.API.Profiles.UserProfile)
+            );
+            services.AddControllersWithViews();
 
             services.AddControllers()
                 // FriendlyJwt authorization services registration below

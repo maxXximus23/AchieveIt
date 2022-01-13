@@ -7,8 +7,8 @@ namespace AchieveIt.BusinessLogic.Contracts
     {
         public Task<AuthUserDto> RegisterStudent(RegisterStudentDto registerStudentDto);
         
-        public Task<AuthUserDto> RegisterTeacher();
+        public Task<AuthUserDto> RegisterTeacher(RegisterTeacherDto registerTeacherDto);
         
-        public Task<AuthUserDto> RegisterAdmin();
+        public Task<AuthUserDto> RegisterAdmin(RegisterAdminDto registerAdminDto);
     }
 }

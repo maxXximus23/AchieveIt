@@ -5,7 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Kirpichyov.FriendlyJwt" Version="1.0.0" />
+        <PackageReference Include="AutoMapper" Version="11.0.0" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="Kirpichyov.FriendlyJwt" Version="1.0.2" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>

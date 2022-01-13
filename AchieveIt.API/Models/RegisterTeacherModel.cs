@@ -1,9 +1,8 @@
 ﻿using System;
-using AchieveIt.DataAccess.Entities;
 
-namespace AchieveIt.BusinessLogic.DTOs.Auth
+namespace AchieveIt.API.Model
 {
-    public class RegisterStudentDto
+    public class RegisterTeacherModel
     {
         public string Name { get; set; }
         
@@ -16,8 +15,6 @@ namespace AchieveIt.BusinessLogic.DTOs.Auth
         public string Password { get; set; }
         
         public string Group { get; set; }
-        
-        public RoleDto Role { get; set; }
         
         public DateTime Birthday { get; set; }
     }
