@@ -1,4 +1,5 @@
-﻿using AchieveIt.BusinessLogic.DTOs.Auth;
+﻿using System;
+using AchieveIt.BusinessLogic.DTOs.Auth;
 using AchieveIt.DataAccess.Entities;
 using AutoMapper;
 
@@ -8,20 +9,27 @@ namespace AchieveIt.BusinessLogic.Profiles
     {
         public UserProfile()
         {
-            CreateMap<RegisterStudentDto, Student>()
-                .ForMember(user => user.Password, opt => opt.MapFrom(src =>
-                BCrypt.Net.BCrypt.HashPassword(src.Password)))
-                .ForMember(user => user.Role, opt => opt.MapFrom(src => Role.Student));
+            CreateMap<RegisterUserDto, User>()
+                .ForMember(user => user.Password, 
+                    opt => opt.MapFrom(src => BCrypt.Net.BCrypt.HashPassword(src.Password)))
+                .ForMember(user => user.Role, 
+                    opt => opt.MapFrom(src => MapRole(src)))
+                .IncludeAllDerived();
 
-            CreateMap<RegisterTeacherDto, Teacher>()
-                .ForMember(teacher => teacher.Password, opt => opt.MapFrom(src =>
-                BCrypt.Net.BCrypt.HashPassword(src.Password)))
-                .ForMember(user => user.Role, opt => opt.MapFrom(src => Role.Teacher));
-            
-            CreateMap<RegisterAdminDto, Admin>()
-                .ForMember(admin => admin.Password, opt => opt.MapFrom(src =>
-                BCrypt.Net.BCrypt.HashPassword(src.Password)))
-                .ForMember(user => user.Role, opt => opt.MapFrom(src => Role.Admin));
+            CreateMap<RegisterTeacherDto, Teacher>();
+            CreateMap<RegisterAdminDto, Admin>();
+            CreateMap<RegisterStudentDto, Student>();
+        }
+
+        private Role MapRole(RegisterUserDto userDto)
+        {
+            return userDto switch
+            {
+                RegisterAdminDto => Role.Admin,
+                RegisterTeacherDto => Role.Teacher,
+                RegisterStudentDto => Role.Student,
+                _ => throw new ArgumentOutOfRangeException(nameof(userDto))
+            };
         }
     }
 }

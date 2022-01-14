@@ -19,7 +19,7 @@ namespace AchieveIt.API.Controllers
         }
 
         [HttpPost("Students")]
-        public async Task<AuthUserDto> RegisterStudent([FromBody] RegisterStudentModel registerStudentModel)
+        public async Task<AuthUserResultDto> RegisterStudent([FromBody] RegisterStudentModel registerStudentModel)
         {
             var studentDto = _mapper.Map<RegisterStudentModel, RegisterStudentDto>(registerStudentModel);
             
@@ -27,7 +27,7 @@ namespace AchieveIt.API.Controllers
         }
         
         [HttpPost("Teachers")] 
-        public async Task<AuthUserDto> RegisterStudent([FromBody] RegisterTeacherModel registerTeacherModel)
+        public async Task<AuthUserResultDto> RegisterStudent([FromBody] RegisterTeacherModel registerTeacherModel)
         {
             var teacherDto = _mapper.Map<RegisterTeacherModel, RegisterTeacherDto>(registerTeacherModel);
             
@@ -35,7 +35,7 @@ namespace AchieveIt.API.Controllers
         }
         
         [HttpPost("Admins")] 
-        public async Task<AuthUserDto> RegisterAdmin([FromBody] RegisterAdminModel registerAdminModel)
+        public async Task<AuthUserResultDto> RegisterAdmin([FromBody] RegisterAdminModel registerAdminModel)
         {
             var adminDto = _mapper.Map<RegisterAdminModel, RegisterAdminDto>(registerAdminModel);
             

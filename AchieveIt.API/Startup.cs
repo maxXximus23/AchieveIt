@@ -1,6 +1,5 @@
 using System;
 using AchieveIt.BusinessLogic.Contracts;
-using AchieveIt.BusinessLogic.Profiles;
 using AchieveIt.BusinessLogic.Services;
 using AchieveIt.DataAccess;
 using AchieveIt.DataAccess.UnitOfWork;
@@ -38,7 +37,6 @@ namespace AchieveIt.API
             services.AddControllersWithViews();
 
             services.AddControllers()
-                // FriendlyJwt authorization services registration below
                 .AddFriendlyJwtAuthentication(configuration =>
                 {
                     configuration.Audience = "https://localhost:5001";

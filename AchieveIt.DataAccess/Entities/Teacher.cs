@@ -2,8 +2,5 @@
 
 namespace AchieveIt.DataAccess.Entities
 {
-    public class Teacher : PersonBase
-    {
-        
-    }
+    public class Teacher : PersonBase { }
 }

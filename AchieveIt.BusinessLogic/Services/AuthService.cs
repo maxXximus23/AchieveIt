@@ -21,28 +21,28 @@ namespace AchieveIt.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task<AuthUserDto> RegisterStudent(RegisterStudentDto registerStudentDto)
+        public async Task<AuthUserResultDto> RegisterStudent(RegisterStudentDto registerStudentDto)
         {
             var student = _mapper.Map<RegisterStudentDto, Student>(registerStudentDto);
 
             return await RegisterUser(student);
         }
 
-        public async Task<AuthUserDto> RegisterTeacher(RegisterTeacherDto registerTeacherDto)
+        public async Task<AuthUserResultDto> RegisterTeacher(RegisterTeacherDto registerTeacherDto)
         {
             var teacher = _mapper.Map<RegisterTeacherDto, Teacher>(registerTeacherDto);
 
             return await RegisterUser(teacher);
         }
 
-        public async Task<AuthUserDto> RegisterAdmin(RegisterAdminDto registerAdminDto)
+        public async Task<AuthUserResultDto> RegisterAdmin(RegisterAdminDto registerAdminDto)
         {
             var admin = _mapper.Map<RegisterAdminDto, Admin>(registerAdminDto);
 
             return await RegisterUser(admin);
         }
 
-        private async Task<AuthUserDto> RegisterUser(User user)
+        private async Task<AuthUserResultDto> RegisterUser(User user)
         {
             if (await _unitOfWork.Users.IsEmailExist(user.Email))
                 throw new ValidationException("User with same Email is already exist!");
@@ -61,27 +61,20 @@ namespace AchieveIt.BusinessLogic.Services
                     .WithUserIdPayloadData(user.Id.ToString())
                     .WithUserEmailPayloadData(user.Email);
 
-            if (user is Student student)
+            if (user is PersonBase personBase)
             {
                 jwtTokenBuilder
-                    .WithPayloadData("Name", student.Name)
-                    .WithPayloadData("Surname", student.Surname)
-                    .WithPayloadData("Patronymic", student.Patronymic);
-            }
-            
-            if (user is Teacher teacher)
-            {
-                jwtTokenBuilder
-                    .WithPayloadData("Name", teacher.Name)
-                    .WithPayloadData("Surname", teacher.Surname)
-                    .WithPayloadData("Patronymic", teacher.Patronymic);
+                    .WithPayloadData("Name", personBase.Name)
+                    .WithPayloadData("Surname", personBase.Surname)
+                    .WithPayloadData("Patronymic", personBase.Patronymic);
             }
 
             GeneratedTokenInfo generatedTokenInfo = jwtTokenBuilder.Build();
 
-            return new AuthUserDto()
+            return new AuthUserResultDto()
             {
                 Token = generatedTokenInfo.Token,
+                ExpiresOnUtc = generatedTokenInfo.ExpiresOn,
                 IsSuccess = true,
                 RefreshToken = null
             };

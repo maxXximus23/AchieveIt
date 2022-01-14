@@ -5,10 +5,10 @@ namespace AchieveIt.BusinessLogic.Contracts
 {
     public interface IAuthService
     {
-        public Task<AuthUserDto> RegisterStudent(RegisterStudentDto registerStudentDto);
+        public Task<AuthUserResultDto> RegisterStudent(RegisterStudentDto registerStudentDto);
         
-        public Task<AuthUserDto> RegisterTeacher(RegisterTeacherDto registerTeacherDto);
+        public Task<AuthUserResultDto> RegisterTeacher(RegisterTeacherDto registerTeacherDto);
         
-        public Task<AuthUserDto> RegisterAdmin(RegisterAdminDto registerAdminDto);
+        public Task<AuthUserResultDto> RegisterAdmin(RegisterAdminDto registerAdminDto);
     }
 }
