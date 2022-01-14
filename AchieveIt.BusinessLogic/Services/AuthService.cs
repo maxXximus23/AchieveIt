@@ -5,20 +5,25 @@ using AchieveIt.BusinessLogic.DTOs.Auth;
 using AchieveIt.BusinessLogic.Exceptions;
 using AchieveIt.DataAccess.Entities;
 using AchieveIt.DataAccess.UnitOfWork;
+using AchieveIt.Shared.Options;
 using AutoMapper;
 using Kirpichyov.FriendlyJwt;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace AchieveIt.BusinessLogic.Services
 {
     public class AuthService : IAuthService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly JwtOptions _jwtOptions;
         private readonly IMapper _mapper;
 
-        public AuthService(IUnitOfWork unitOfWork, IMapper mapper)
+        public AuthService(IUnitOfWork unitOfWork, IMapper mapper, IOptions<JwtOptions> jwtOptions)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _jwtOptions = jwtOptions.Value;
         }
 
         public async Task<AuthUserResultDto> RegisterStudent(RegisterStudentDto registerStudentDto)
@@ -50,13 +55,12 @@ namespace AchieveIt.BusinessLogic.Services
             _unitOfWork.Users.AddUser(user);
             await _unitOfWork.SaveChanges();
             
-            TimeSpan lifeTime = TimeSpan.FromMinutes(1);
-            string secret = "SecretYGPV8XC6bPJhQCUBV2LtDSharp";
-            
+            TimeSpan lifeTime = TimeSpan.FromMinutes(_jwtOptions.LifeTimeMinutes);
+
             JwtTokenBuilder jwtTokenBuilder =
-                new JwtTokenBuilder(lifeTime, secret)
-                    .WithIssuer("https://localhost:5001")
-                    .WithAudience("https://localhost:5001")
+                new JwtTokenBuilder(lifeTime, _jwtOptions.Secret)
+                    .WithIssuer(_jwtOptions.Issuer)
+                    .WithAudience(_jwtOptions.Audience)
                     .WithUserRolePayloadData(user.Role.ToString())
                     .WithUserIdPayloadData(user.Id.ToString())
                     .WithUserEmailPayloadData(user.Email);

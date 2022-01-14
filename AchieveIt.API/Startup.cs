@@ -3,9 +3,11 @@ using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.Services;
 using AchieveIt.DataAccess;
 using AchieveIt.DataAccess.UnitOfWork;
+using AchieveIt.Shared.Options;
 using Kirpichyov.FriendlyJwt.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,12 +38,18 @@ namespace AchieveIt.API
             );
             services.AddControllersWithViews();
 
+            services.AddOptions<JwtOptions>()
+                .Bind(Configuration.GetSection(JwtOptions.JwtSectionName));
+            
             services.AddControllers()
                 .AddFriendlyJwtAuthentication(configuration =>
                 {
-                    configuration.Audience = "https://localhost:5001";
-                    configuration.Issuer = "https://localhost:5001";
-                    configuration.Secret = "SecretYGPV8XC6bPJhQCUBV2LtDSharp";
+                    var jwtOptions = new JwtOptions();
+                    Configuration.Bind(JwtOptions.JwtSectionName, jwtOptions);
+                    
+                    configuration.Audience = jwtOptions.Audience;
+                    configuration.Issuer = jwtOptions.Issuer;
+                    configuration.Secret = jwtOptions.Secret;
                 });
             services.AddSwaggerGen(c =>
             {
