@@ -4,4 +4,14 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AchieveIt.DataAccess\AchieveIt.DataAccess.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="11.0.0" />
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+      <PackageReference Include="Kirpichyov.FriendlyJwt" Version="1.0.2" />
+    </ItemGroup>
+
 </Project>
