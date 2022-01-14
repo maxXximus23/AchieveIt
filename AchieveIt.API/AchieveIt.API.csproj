@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\AchieveIt.BusinessLogic\AchieveIt.BusinessLogic.csproj" />
       <ProjectReference Include="..\AchieveIt.DataAccess\AchieveIt.DataAccess.csproj" />
+      <ProjectReference Include="..\AchieveIt.Shared\AchieveIt.Shared.csproj" />
     </ItemGroup>
 
 </Project>
