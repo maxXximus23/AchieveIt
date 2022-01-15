@@ -9,6 +9,6 @@ namespace AchieveIt.BusinessLogic.DTOs.Auth
         public string Token { get; set; }
         public DateTime ExpiresOnUtc  { get; set; }
         
-        public string RefreshToken { get; set; }
+        public Guid RefreshToken { get; set; }
     }
 }

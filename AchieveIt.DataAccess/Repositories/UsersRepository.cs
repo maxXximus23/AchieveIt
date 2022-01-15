@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AchieveIt.DataAccess.Entities;
 using AchieveIt.DataAccess.Repositories.Contracts;
+using AchieveIt.Shared.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AchieveIt.DataAccess.Repositories
@@ -18,6 +19,12 @@ namespace AchieveIt.DataAccess.Repositories
         public void AddUser(User user)
         {
             _context.Users.Add(user);
+        }
+
+        public async Task<User> GetUser(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(user => user.Id == id)
+                ?? throw new NotFoundException($"User with id {id} has not found.");
         }
 
         public async Task<bool> IsEmailExist(string email)

@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AchieveIt.API.Model;
+using AchieveIt.API.Models;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.DTOs.Auth;
+using AchieveIt.DataAccess.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +42,14 @@ namespace AchieveIt.API.Controllers
             var adminDto = _mapper.Map<RegisterAdminModel, RegisterAdminDto>(registerAdminModel);
             
             return await _authService.RegisterAdmin(adminDto);
+        }
+        
+        [HttpPost("Refresh")] 
+        public async Task<AuthUserResultDto> RefreshToken([FromBody] RefreshTokenModel refreshToken)
+        {
+            var refreshTokenDto = _mapper.Map<RefreshTokenModel, RefreshTokenDto>(refreshToken);
+            
+            return await _authService.RefreshToken(refreshTokenDto);
         }
     }
 }

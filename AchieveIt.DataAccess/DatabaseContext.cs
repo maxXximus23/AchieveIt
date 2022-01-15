@@ -6,6 +6,7 @@ namespace AchieveIt.DataAccess
     public class DatabaseContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         
         public DatabaseContext(DbContextOptions<DatabaseContext> dbContextOptions) : base(dbContextOptions)
         {
@@ -18,6 +19,10 @@ namespace AchieveIt.DataAccess
             
             modelBuilder.Entity<User>(entity => {
                 entity.ToTable("User");
+            });
+            
+            modelBuilder.Entity<RefreshToken>(entity => {
+                entity.ToTable("RefreshToken");
             });
             
             modelBuilder.Entity<User>()
