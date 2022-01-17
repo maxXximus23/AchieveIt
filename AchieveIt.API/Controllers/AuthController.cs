@@ -3,12 +3,13 @@ using AchieveIt.API.Model;
 using AchieveIt.API.Models;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.DTOs.Auth;
-using AchieveIt.DataAccess.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AchieveIt.API.Controllers
 {
+   [ApiController]
+   [Route("api/[controller]/[action]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -50,6 +51,14 @@ namespace AchieveIt.API.Controllers
             var refreshTokenDto = _mapper.Map<RefreshTokenModel, RefreshTokenDto>(refreshToken);
             
             return await _authService.RefreshToken(refreshTokenDto);
+        }
+        
+        [HttpPost] 
+        public async Task<AuthUserResultDto> SignIn([FromBody] SignInModel signInModel)
+        {
+            var signInDto = _mapper.Map<SignInModel, SignInDto>(signInModel);
+            
+            return await _authService.SignIn(signInDto);
         }
     }
 }

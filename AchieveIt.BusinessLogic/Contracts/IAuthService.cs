@@ -12,5 +12,7 @@ namespace AchieveIt.BusinessLogic.Contracts
         public Task<AuthUserResultDto> RegisterAdmin(RegisterAdminDto registerAdminDto);
 
         public Task<AuthUserResultDto> RefreshToken(RefreshTokenDto refreshTokenDto);
+
+        public Task<AuthUserResultDto> SignIn(SignInDto signInDto);
     }
 }

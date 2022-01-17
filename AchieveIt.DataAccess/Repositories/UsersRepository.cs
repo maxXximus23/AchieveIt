@@ -27,6 +27,13 @@ namespace AchieveIt.DataAccess.Repositories
                 ?? throw new NotFoundException($"User with id {id} has not found.");
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _context.Users
+                .AsNoTracking()
+                .SingleOrDefaultAsync(user => user.Email == email);
+        }
+
         public async Task<bool> IsEmailExist(string email)
         {
             return await _context.Users.AnyAsync(user => user.Email == email);

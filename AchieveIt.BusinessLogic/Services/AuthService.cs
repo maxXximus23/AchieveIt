@@ -79,7 +79,7 @@ namespace AchieveIt.BusinessLogic.Services
            
            User user = await _unitOfWork.Users.GetUser(int.Parse(result.UserId));
 
-           GeneratedTokenInfo generatedTokenInfo = JwtTokenBuilder(user);
+           GeneratedTokenInfo generatedTokenInfo = GenerateJwtToken(user);
 
            var newRefreshToken = GenerateRefreshToken(Guid.Parse(generatedTokenInfo.TokenId));
            
@@ -96,7 +96,35 @@ namespace AchieveIt.BusinessLogic.Services
            };
         }
 
-        private GeneratedTokenInfo JwtTokenBuilder(User user)
+        public async Task<AuthUserResultDto> SignIn(SignInDto signInDto)
+        {
+            User user = await _unitOfWork.Users.GetUserByEmail(signInDto.Email);
+
+            if (user is null || !BCrypt.Net.BCrypt.Verify(signInDto.Password, user.Password))
+            {
+                return new AuthUserResultDto()
+                {
+                    IsSuccess = false
+                };
+            }
+
+            var jwtToken = GenerateJwtToken(user);
+            var newRefreshToken = GenerateRefreshToken(Guid.Parse(jwtToken.TokenId));
+            
+            _unitOfWork.RefreshTokens.AddToken(newRefreshToken);
+            await _unitOfWork.SaveChanges();
+            
+            return new AuthUserResultDto()
+            {
+                Token = jwtToken.Token,
+                IsSuccess = true,
+                RefreshToken = newRefreshToken.Id,
+                ExpiresOnUtc = DateTime.UtcNow.AddMonths(_refreshTokenOptions.ExpiresOnMonth)
+            };
+            
+        }
+
+        private GeneratedTokenInfo GenerateJwtToken(User user)
         {
             TimeSpan lifeTime = TimeSpan.FromMinutes(_jwtOptions.LifeTimeMinutes);
            
@@ -138,7 +166,7 @@ namespace AchieveIt.BusinessLogic.Services
             _unitOfWork.Users.AddUser(user);
             await _unitOfWork.SaveChanges();
 
-            GeneratedTokenInfo generatedTokenInfo = JwtTokenBuilder(user);
+            GeneratedTokenInfo generatedTokenInfo = GenerateJwtToken(user);
 
             var refreshToken = GenerateRefreshToken(Guid.Parse(generatedTokenInfo.TokenId));
 
