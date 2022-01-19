@@ -41,12 +41,15 @@ namespace AchieveIt.API
             services.AddOptions<JwtOptions>()
                 .Bind(Configuration.GetSection(JwtOptions.JwtSectionName));
             
+            services.AddOptions<RefreshTokenOptions>()
+                .Bind(Configuration.GetSection(RefreshTokenOptions.RefreshTokenSectionName));
+            
             services.AddControllers()
                 .AddFriendlyJwtAuthentication(configuration =>
                 {
                     var jwtOptions = new JwtOptions();
                     Configuration.Bind(JwtOptions.JwtSectionName, jwtOptions);
-                    
+
                     configuration.Audience = jwtOptions.Audience;
                     configuration.Issuer = jwtOptions.Issuer;
                     configuration.Secret = jwtOptions.Secret;

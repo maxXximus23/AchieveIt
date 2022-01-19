@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AchieveIt.BusinessLogic.Exceptions
+namespace AchieveIt.Shared.Exceptions
 {
     public class ValidationException : Exception
     {
