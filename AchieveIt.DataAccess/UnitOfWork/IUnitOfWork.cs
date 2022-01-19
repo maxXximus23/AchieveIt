@@ -7,7 +7,7 @@ namespace AchieveIt.DataAccess.UnitOfWork
     {
         public IUsersRepository Users { get; }
         
-        public IRefreshTokenRepository RefreshTokens{ get; }
+        public IRefreshTokenRepository RefreshTokens { get; }
 
         public Task SaveChanges();
     }

@@ -7,7 +7,6 @@ namespace AchieveIt.DataAccess.Repositories.Contracts
     public interface IRefreshTokenRepository
     {
         public void AddToken(RefreshToken refreshToken);
-
         public void DeleteToken(RefreshToken refreshToken);
         public Task<RefreshToken> GetToken(Guid refreshTokenId);
     }

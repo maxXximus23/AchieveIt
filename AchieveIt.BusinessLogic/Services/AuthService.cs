@@ -22,8 +22,12 @@ namespace AchieveIt.BusinessLogic.Services
         private readonly RefreshTokenOptions _refreshTokenOptions;
         private readonly IMapper _mapper;
 
-        public AuthService(IUnitOfWork unitOfWork, IMapper mapper, IOptions<JwtOptions> jwtOptions,
-            IOptions<RefreshTokenOptions> refreshTokenOptions, IJwtTokenVerifier jwtTokenVerifier)
+        public AuthService(
+            IUnitOfWork unitOfWork, 
+            IMapper mapper, 
+            IOptions<JwtOptions> jwtOptions,
+            IOptions<RefreshTokenOptions> refreshTokenOptions, 
+            IJwtTokenVerifier jwtTokenVerifier)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -119,9 +123,8 @@ namespace AchieveIt.BusinessLogic.Services
                 Token = jwtToken.Token,
                 IsSuccess = true,
                 RefreshToken = newRefreshToken.Id,
-                ExpiresOnUtc = DateTime.UtcNow.AddMonths(_refreshTokenOptions.ExpiresOnMonth)
+                ExpiresOnUtc = jwtToken.ExpiresOn
             };
-            
         }
 
         private GeneratedTokenInfo GenerateJwtToken(User user)
@@ -161,8 +164,10 @@ namespace AchieveIt.BusinessLogic.Services
         private async Task<AuthUserResultDto> RegisterUser(User user)
         {
             if (await _unitOfWork.Users.IsEmailExist(user.Email))
-                throw new ValidationException("User with same Email is already exist!");
-            
+            {
+                throw new ValidationException("User with same Email is already exist.");
+            }
+
             _unitOfWork.Users.AddUser(user);
             await _unitOfWork.SaveChanges();
 

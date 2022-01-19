@@ -30,7 +30,7 @@ namespace AchieveIt.DataAccess.Repositories
         {
             return await _databaseContext.RefreshTokens.FirstOrDefaultAsync(
                 refreshToken => refreshToken.Id == refreshTokenId) 
-                   ?? throw new NotFoundException($"Token with {refreshTokenId} id is not found.");
+                   ?? throw new NotFoundException(nameof(RefreshToken), refreshTokenId.ToString());
         }
     }
 }
