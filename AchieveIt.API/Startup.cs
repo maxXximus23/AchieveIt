@@ -1,9 +1,13 @@
 using System;
+using AchieveIt.API.Validators;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.Services;
 using AchieveIt.DataAccess;
+using AchieveIt.DataAccess.Entities;
 using AchieveIt.DataAccess.UnitOfWork;
 using AchieveIt.Shared.Options;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Kirpichyov.FriendlyJwt.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,7 +57,10 @@ namespace AchieveIt.API
                     configuration.Audience = jwtOptions.Audience;
                     configuration.Issuer = jwtOptions.Issuer;
                     configuration.Secret = jwtOptions.Secret;
-                });
+                })
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StudentValidator>());
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "AchieveIt.API", Version = "v1"});

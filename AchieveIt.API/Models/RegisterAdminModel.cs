@@ -1,4 +1,4 @@
-﻿namespace AchieveIt.API.Model
+﻿namespace AchieveIt.API.Models
 {
     public class RegisterAdminModel
     {
