@@ -1,33 +1,45 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using AchieveIt.Shared.Exceptions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace AchieveIt.API.Extensions
 {
-    public static class ExceptionMiddlewareExtensions
+    public class ExceptionMiddlewareExtensions : ExceptionFilterAttribute
     {
-        public static void ConfigureExceptionHandler(this IApplicationBuilder applicationBuilder)
+        public override void OnException(ExceptionContext context)
         {
-            applicationBuilder.UseExceptionHandler(appException =>
-            {
-                appException.Run(async context =>
-                {
-                    context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "application/json";
+            ConfigureExceptionHandler(context);
+            context.ExceptionHandled = true;
+        }
+        private static void ConfigureExceptionHandler(ExceptionContext context)
+        {
+            Exception exception = context.Exception;
 
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature != null)
-                    {
-                        await context.Response.WriteAsync(new ExceptionDetails
-                        {
-                            StatusCode = context.Response.StatusCode,
-                            Message = "Internal Server Error"
-                        }.ToString());
-                    }
-                });
-            });
+            switch (exception)
+            {
+                case NotFoundException:
+                    SetExceptionResult(context, exception, HttpStatusCode.NotFound);
+                    break;
+                case ValidationException:
+                    SetExceptionResult(context, exception, HttpStatusCode.BadRequest);
+                    break;
+                default:
+                    SetExceptionResult(context, exception, HttpStatusCode.InternalServerError);
+                    break;
+            }
+        }
+
+        private static void SetExceptionResult(
+            ExceptionContext context, 
+            Exception exception, 
+            HttpStatusCode statusCode)
+        {
+            context.Result = new JsonResult(exception.Message)
+            {
+                StatusCode = (int)statusCode
+            };
         }
     }
 }

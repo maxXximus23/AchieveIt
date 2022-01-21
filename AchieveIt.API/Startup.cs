@@ -59,7 +59,16 @@ namespace AchieveIt.API
                     configuration.Issuer = jwtOptions.Issuer;
                     configuration.Secret = jwtOptions.Secret;
                 })
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<StudentValidator>());
+                
+                .AddMvcOptions(options =>
+                {
+                    options.Filters.Add<ExceptionMiddlewareExtensions>();
+                })
+                
+                .AddFluentValidation(fv =>
+                {
+                    fv.RegisterValidatorsFromAssemblyContaining<StudentValidator>();
+                });
             ValidatorOptions.Global.LanguageManager.Enabled = false;
 
             services.AddSwaggerGen(c =>
@@ -88,8 +97,6 @@ namespace AchieveIt.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AchieveIt.API v1"));
             }
-
-            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 
