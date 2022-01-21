@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using AchieveIt.API.Model;
 using AchieveIt.API.Models;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.DTOs.Auth;
