@@ -1,4 +1,5 @@
 using System;
+using AchieveIt.API.Extensions;
 using AchieveIt.API.Validators;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.Services;
@@ -87,6 +88,8 @@ namespace AchieveIt.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AchieveIt.API v1"));
             }
+
+            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 
