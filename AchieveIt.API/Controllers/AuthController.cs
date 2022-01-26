@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AchieveIt.API.Models;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.DTOs.Auth;
@@ -12,13 +11,15 @@ namespace AchieveIt.API.Controllers
     [Authorize(Roles = "Admin")]
     public class AuthController : ControllerBase
     {
+        private readonly IBlobService _blobService;
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
 
-        public AuthController(IAuthService authService, IMapper mapper)
+        public AuthController(IAuthService authService, IMapper mapper, IBlobService blobService)
         {
             _authService = authService;
             _mapper = mapper;
+            _blobService = blobService;
         }
 
         [HttpPost("Students")]
@@ -53,7 +54,7 @@ namespace AchieveIt.API.Controllers
             
             return await _authService.RefreshToken(refreshTokenDto);
         }
-        
+
         [HttpPost] 
         [AllowAnonymous]
         public async Task<AuthUserResultDto> SignIn([FromBody] SignInModel signInModel)
