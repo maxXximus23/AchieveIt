@@ -9,9 +9,9 @@ namespace AchieveIt.BusinessLogic.Contracts
 {
     public interface IBlobService
     {
-        public Task<BlobFileInfo> GetBlobAsync(string name);
+        public Task<BlobFileInfo> GetBlobAsync(string name, string containerName);
 
-        public Task UploadFileBlobAsync(IFormFile file, bool inline = false);
+        public Task UploadFileBlobAsync(IFormFile file, string containerName, bool inline = false);
 
         public string GenerateSaS(
             string containerName, 
@@ -22,7 +22,5 @@ namespace AchieveIt.BusinessLogic.Contracts
         public Task UploadContentBlobAsync(string content, string fileName);
 
         public Task DeleteBlobAsync(string blobName);
-
-        public Task<IEnumerable<string>> ListBlobAsync();
     }
 }

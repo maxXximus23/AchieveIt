@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.Shared.Options;
@@ -22,23 +21,23 @@ namespace AchieveIt.BusinessLogic.Services
             _blobStorageOptions = blobStorageOptions.Value;
         }
 
-        public async Task<BlobFileInfo> GetBlobAsync(string name)
+        public async Task<BlobFileInfo> GetBlobAsync(string name, string containerName)
         {
-            var containerClient = _blobServiceClient.GetBlobContainerClient("avatars");
+            var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
             var blobClient = containerClient.GetBlobClient(name);
             var blobDownloadInfo = await blobClient.DownloadAsync();
 
             return new BlobFileInfo(blobDownloadInfo.Value.Content, blobDownloadInfo.Value.ContentType);
         }
 
-        public async Task UploadFileBlobAsync(IFormFile file, bool inline = false)
+        public async Task UploadFileBlobAsync(IFormFile file, string containerName, bool inline = false)
         {
-            var container = _blobServiceClient.GetBlobContainerClient("avatars");
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
             var blob = container.GetBlobClient(Guid.NewGuid().ToString());
             var header = new BlobHttpHeaders()
             {
                 ContentType = file.ContentType,
-                ContentDisposition = $"{(inline? "inline" : "attachment")}; filename=\"{file.FileName}\";"
+                ContentDisposition = $"{(inline ? "inline" : "attachment")}; filename=\"{file.FileName}\";"
             };
 
             await blob.UploadAsync(file.OpenReadStream(), header);
@@ -82,11 +81,6 @@ namespace AchieveIt.BusinessLogic.Services
         {
             var containerClient = _blobServiceClient.GetBlobContainerClient("avatars");
             var blobClient = await containerClient.GetBlobClient(blobName).DeleteAsync();
-        }
-
-        public Task<IEnumerable<string>> ListBlobAsync()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

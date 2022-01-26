@@ -11,15 +11,13 @@ namespace AchieveIt.API.Controllers
     [Authorize(Roles = "Admin")]
     public class AuthController : ControllerBase
     {
-        private readonly IBlobService _blobService;
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
 
-        public AuthController(IAuthService authService, IMapper mapper, IBlobService blobService)
+        public AuthController(IAuthService authService, IMapper mapper)
         {
             _authService = authService;
             _mapper = mapper;
-            _blobService = blobService;
         }
 
         [HttpPost("Students")]
