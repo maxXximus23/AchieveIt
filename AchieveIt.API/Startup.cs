@@ -4,15 +4,14 @@ using AchieveIt.API.Validators;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.Services;
 using AchieveIt.DataAccess;
-using AchieveIt.DataAccess.Entities;
 using AchieveIt.DataAccess.UnitOfWork;
 using AchieveIt.Shared.Options;
+using Azure.Storage.Blobs;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Kirpichyov.FriendlyJwt.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,6 +48,9 @@ namespace AchieveIt.API
             
             services.AddOptions<RefreshTokenOptions>()
                 .Bind(Configuration.GetSection(RefreshTokenOptions.RefreshTokenSectionName));
+
+            services.AddOptions<BlobStorageOptions>()
+                .Bind(Configuration.GetSection(BlobStorageOptions.SectionName));
             
             services.AddControllers()
                 .AddFriendlyJwtAuthentication(configuration =>
@@ -72,6 +74,11 @@ namespace AchieveIt.API
                 });
             ValidatorOptions.Global.LanguageManager.Enabled = false;
 
+            var blobOptions = new BlobStorageOptions();
+            Configuration.Bind(BlobStorageOptions.SectionName, blobOptions);
+            services.AddSingleton(x => new BlobServiceClient(blobOptions.ConnectionString));
+            services.AddSingleton<IBlobService, BlobService>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "AchieveIt.API", Version = "v1"});

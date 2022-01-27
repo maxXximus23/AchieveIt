@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AchieveIt.API.Models;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.DTOs.Auth;
@@ -53,7 +52,7 @@ namespace AchieveIt.API.Controllers
             
             return await _authService.RefreshToken(refreshTokenDto);
         }
-        
+
         [HttpPost] 
         [AllowAnonymous]
         public async Task<AuthUserResultDto> SignIn([FromBody] SignInModel signInModel)
