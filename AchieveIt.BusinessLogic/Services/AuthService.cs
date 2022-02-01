@@ -142,9 +142,9 @@ namespace AchieveIt.BusinessLogic.Services
             if (user is PersonBase personBase)
             {
                 jwtTokenBuilder
-                    .WithPayloadData("Name", personBase.Name)
-                    .WithPayloadData("Surname", personBase.Surname)
-                    .WithPayloadData("Patronymic", personBase.Patronymic);
+                    .WithPayloadData("user_name", personBase.Name)
+                    .WithPayloadData("user_surname", personBase.Surname)
+                    .WithPayloadData("user_patronymic", personBase.Patronymic);
             }
 
             return jwtTokenBuilder.Build();

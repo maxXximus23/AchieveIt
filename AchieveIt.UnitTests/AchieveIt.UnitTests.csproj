@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+
+        <RootNamespace>AuthServiceTests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="11.0.0" />
+        <PackageReference Include="Bogus" Version="34.0.1" />
+        <PackageReference Include="FakeItEasy" Version="7.3.0" />
+        <PackageReference Include="FluentAssertions" Version="6.4.0" />
+        <PackageReference Include="NUnit" Version="3.12.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AchieveIt.API\AchieveIt.API.csproj" />
+      <ProjectReference Include="..\AchieveIt.DataAccess\AchieveIt.DataAccess.csproj" />
+    </ItemGroup>
+
+</Project>
