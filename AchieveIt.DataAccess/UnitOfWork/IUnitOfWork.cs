@@ -7,6 +7,8 @@ namespace AchieveIt.DataAccess.UnitOfWork
     {
         public IUsersRepository Users { get; }
         
+        public IGroupRepository Groups { get; }
+        
         public IRefreshTokenRepository RefreshTokens { get; }
 
         public Task SaveChanges();

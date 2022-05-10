@@ -30,17 +30,20 @@ namespace AchieveIt.BusinessLogic.Services
             return new BlobFileInfo(blobDownloadInfo.Value.Content, blobDownloadInfo.Value.ContentType);
         }
 
-        public async Task UploadFileBlobAsync(IFormFile file, string containerName, bool inline = false)
+        public async Task<string> UploadFileBlobAsync(
+            IFormFile file, string containerName, bool inline = false, string fileName = null)
         {
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
-            var blob = container.GetBlobClient(Guid.NewGuid().ToString());
+            var newGuid = Guid.NewGuid().ToString();
+            var blob = container.GetBlobClient(newGuid);
             var header = new BlobHttpHeaders()
             {
                 ContentType = file.ContentType,
-                ContentDisposition = $"{(inline ? "inline" : "attachment")}; filename=\"{file.FileName}\";"
+                ContentDisposition = $"{(inline ? "inline" : "attachment")}; filename=\"{fileName ?? file.FileName}\";"
             };
 
             await blob.UploadAsync(file.OpenReadStream(), header);
+            return newGuid;
         }
 
         public string GenerateSaS(

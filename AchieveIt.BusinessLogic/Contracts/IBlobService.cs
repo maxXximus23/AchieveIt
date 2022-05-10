@@ -11,7 +11,8 @@ namespace AchieveIt.BusinessLogic.Contracts
     {
         public Task<BlobFileInfo> GetBlobAsync(string name, string containerName);
 
-        public Task UploadFileBlobAsync(IFormFile file, string containerName, bool inline = false);
+        public Task<string> UploadFileBlobAsync(IFormFile file, string containerName, 
+            bool inline = false, string fileName = null);
 
         public string GenerateSaS(
             string containerName, 

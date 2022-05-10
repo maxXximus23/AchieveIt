@@ -1,5 +1,6 @@
 ﻿using System;
 using AchieveIt.BusinessLogic.DTOs.Auth;
+using AchieveIt.BusinessLogic.DTOs.Group;
 using AchieveIt.DataAccess.Entities;
 using AutoMapper;
 
@@ -19,6 +20,7 @@ namespace AchieveIt.BusinessLogic.Profiles
             CreateMap<RegisterTeacherDto, Teacher>();
             CreateMap<RegisterAdminDto, Admin>();
             CreateMap<RegisterStudentDto, Student>();
+            CreateMap<Group, GroupDto>();
         }
 
         private Role MapRole(RegisterUserDto userDto)

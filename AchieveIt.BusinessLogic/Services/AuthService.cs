@@ -81,7 +81,7 @@ namespace AchieveIt.BusinessLogic.Services
                throw new ValidationException("Access token is not valid.");
            }
            
-           User user = await _unitOfWork.Users.GetUser(int.Parse(result.UserId));
+           User user = await _unitOfWork.Users.GetUser<User>(int.Parse(result.UserId));
 
            GeneratedTokenInfo generatedTokenInfo = GenerateJwtToken(user);
 
@@ -102,7 +102,7 @@ namespace AchieveIt.BusinessLogic.Services
 
         public async Task<AuthUserResultDto> SignIn(SignInDto signInDto)
         {
-            User user = await _unitOfWork.Users.GetUserByEmail(signInDto.Email);
+            User user = await _unitOfWork.Users.GetUserByEmail<User>(signInDto.Email);
 
             if (user is null || !BCrypt.Net.BCrypt.Verify(signInDto.Password, user.Password))
             {

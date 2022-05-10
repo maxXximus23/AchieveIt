@@ -7,6 +7,7 @@ namespace AchieveIt.DataAccess.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private IUsersRepository _users;
+        private IGroupRepository _group;
         private IRefreshTokenRepository _refreshTokens;
         private readonly DatabaseContext _context;
 
@@ -27,7 +28,20 @@ namespace AchieveIt.DataAccess.UnitOfWork
                 return _users;
             }
         }
-        
+
+        public IGroupRepository Groups
+        {
+            get
+            {
+                if (_group is null)
+                {
+                    _group = new GroupRepository(_context);
+                }
+
+                return _group; 
+            }
+        }
+
         public IRefreshTokenRepository RefreshTokens
         {
             get

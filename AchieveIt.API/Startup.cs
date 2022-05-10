@@ -35,6 +35,8 @@ namespace AchieveIt.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             services.AddAutoMapper(
@@ -82,8 +84,30 @@ namespace AchieveIt.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "AchieveIt.API", Version = "v1"});
+                
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert JWT with bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
-            
+
             services.AddFriendlyJwt();
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 0));
             
