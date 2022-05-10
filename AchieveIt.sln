@@ -6,6 +6,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchieveIt.DataAccess", "Ach
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchieveIt.BusinessLogic", "AchieveIt.BusinessLogic\AchieveIt.BusinessLogic.csproj", "{48227747-8049-4C2F-98CC-1D738B1C474E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchieveIt.Shared", "AchieveIt.Shared\AchieveIt.Shared.csproj", "{A1E96613-A509-431E-BC06-EA2D94141FFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FBE61966-4153-423E-AC29-14E56BA445C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AchieveIt.UnitTests", "AchieveIt.UnitTests\AchieveIt.UnitTests.csproj", "{6220FEA8-7804-40E4-9A84-B8BB7E66C974}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +30,16 @@ Global
 		{48227747-8049-4C2F-98CC-1D738B1C474E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48227747-8049-4C2F-98CC-1D738B1C474E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48227747-8049-4C2F-98CC-1D738B1C474E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E96613-A509-431E-BC06-EA2D94141FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E96613-A509-431E-BC06-EA2D94141FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E96613-A509-431E-BC06-EA2D94141FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E96613-A509-431E-BC06-EA2D94141FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6220FEA8-7804-40E4-9A84-B8BB7E66C974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6220FEA8-7804-40E4-9A84-B8BB7E66C974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6220FEA8-7804-40E4-9A84-B8BB7E66C974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6220FEA8-7804-40E4-9A84-B8BB7E66C974}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6220FEA8-7804-40E4-9A84-B8BB7E66C974} = {FBE61966-4153-423E-AC29-14E56BA445C6}
 	EndGlobalSection
 EndGlobal

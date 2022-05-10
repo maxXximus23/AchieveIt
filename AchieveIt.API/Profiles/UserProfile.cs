@@ -1,4 +1,4 @@
-﻿using AchieveIt.API.Model;
+﻿using AchieveIt.API.Models;
 using AchieveIt.BusinessLogic.DTOs.Auth;
 using AchieveIt.DataAccess.Entities;
 using AutoMapper;
