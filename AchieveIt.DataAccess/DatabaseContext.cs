@@ -7,6 +7,7 @@ namespace AchieveIt.DataAccess
     {
         public DbSet<Group> Groups { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         
         public DatabaseContext(DbContextOptions<DatabaseContext> dbContextOptions) : base(dbContextOptions)
@@ -28,6 +29,10 @@ namespace AchieveIt.DataAccess
 
             modelBuilder.Entity<Group>(entity => {
                 entity.ToTable("Group");
+            });
+            
+            modelBuilder.Entity<Subject>(entity => {
+                entity.ToTable("Subject");
             });
             
             modelBuilder.Entity<TeacherGroup>()

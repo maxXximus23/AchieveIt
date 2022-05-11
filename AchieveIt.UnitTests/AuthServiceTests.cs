@@ -339,7 +339,7 @@ namespace AuthServiceTests
             _unitOfWork.CallsTo(unitOfWork => unitOfWork.Users)
                 .Returns(_usersRepository.FakedObject);
             
-            _usersRepository.CallsTo(repository => repository.GetUserByEmail(signInDto.Email))
+            _usersRepository.CallsTo(repository => repository.GetUserByEmail<User>(signInDto.Email))
                 .Returns(userInRepository);
 
             AuthService sut = BuildSut();
@@ -355,7 +355,7 @@ namespace AuthServiceTests
                 result.IsSuccess.Should().BeFalse();
                 result.ExpiresOnUtc.Should().BeNull();
 
-                _usersRepository.CallsTo(repository => repository.GetUserByEmail(signInDto.Email))
+                _usersRepository.CallsTo(repository => repository.GetUserByEmail<User>(signInDto.Email))
                     .MustHaveHappenedOnceExactly();
                 
                 _unitOfWork.CallsTo(unitOfWork => unitOfWork.SaveChanges())
@@ -383,7 +383,7 @@ namespace AuthServiceTests
                 .Returns(_usersRepository.FakedObject);
             
             
-            _usersRepository.CallsTo(repository => repository.GetUserByEmail(signInDto.Email))
+            _usersRepository.CallsTo(repository => repository.GetUserByEmail<User>(signInDto.Email))
                 .Returns(userInRepository);
             
             AuthService sut = BuildSut();
@@ -399,7 +399,7 @@ namespace AuthServiceTests
                 result.IsSuccess.Should().BeFalse();
                 result.ExpiresOnUtc.Should().BeNull();
 
-                _usersRepository.CallsTo(repository => repository.GetUserByEmail(signInDto.Email))
+                _usersRepository.CallsTo(repository => repository.GetUserByEmail<User>(signInDto.Email))
                     .MustHaveHappenedOnceExactly();
                 
                 _unitOfWork.CallsTo(unitOfWork => unitOfWork.SaveChanges())
@@ -424,7 +424,7 @@ namespace AuthServiceTests
                 .Returns(_usersRepository.FakedObject);
             
             
-            _usersRepository.CallsTo(repository => repository.GetUserByEmail(signInDto.Email))
+            _usersRepository.CallsTo(repository => repository.GetUserByEmail<User>(signInDto.Email))
                 .Returns(userInRepository);
             
             _unitOfWork.CallsTo(unitOfWork => unitOfWork.RefreshTokens)
@@ -450,7 +450,7 @@ namespace AuthServiceTests
                     .Be(DateTime.UtcNow.AddMinutes(fakedOptions.LifeTimeMinutes)
                         .ToString("yyyy-MM-dd hh:mm"));
 
-                _usersRepository.CallsTo(repository => repository.GetUserByEmail(signInDto.Email))
+                _usersRepository.CallsTo(repository => repository.GetUserByEmail<User>(signInDto.Email))
                     .MustHaveHappenedOnceExactly();
                 
                 _refreshTokenRepository.CallsTo(tokenRepository => tokenRepository.AddToken(A<RefreshToken>._))
@@ -645,7 +645,7 @@ namespace AuthServiceTests
             _unitOfWork.CallsTo(unitOfWork => unitOfWork.Users)
                 .Returns(_usersRepository.FakedObject);
 
-            _usersRepository.CallsTo(usersRepository => usersRepository.GetUser(int.Parse(
+            _usersRepository.CallsTo(usersRepository => usersRepository.GetUser<User>(int.Parse(
                     jwtVerificationResult.UserId)))
                 .Returns(user);
 
