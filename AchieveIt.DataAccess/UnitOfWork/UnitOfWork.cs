@@ -8,6 +8,7 @@ namespace AchieveIt.DataAccess.UnitOfWork
     {
         private IUsersRepository _users;
         private IGroupRepository _group;
+        private ISubjectRepository _subject;
         private IRefreshTokenRepository _refreshTokens;
         private readonly DatabaseContext _context;
 
@@ -39,6 +40,19 @@ namespace AchieveIt.DataAccess.UnitOfWork
                 }
 
                 return _group; 
+            }
+        }
+
+        public ISubjectRepository Subjects
+        {
+            get
+            {
+                if (_subject is null)
+                {
+                    _subject = new SubjectRepository(_context);
+                }
+
+                return _subject;
             }
         }
 

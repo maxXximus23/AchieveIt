@@ -4,6 +4,7 @@ using AchieveIt.API.Validators;
 using AchieveIt.BusinessLogic.Contracts;
 using AchieveIt.BusinessLogic.Services;
 using AchieveIt.DataAccess;
+using AchieveIt.DataAccess.Entities;
 using AchieveIt.DataAccess.UnitOfWork;
 using AchieveIt.Shared.Options;
 using Azure.Storage.Blobs;
@@ -36,6 +37,7 @@ namespace AchieveIt.API
         {
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
