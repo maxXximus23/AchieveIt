@@ -39,6 +39,7 @@ namespace AchieveIt.API
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             services.AddAutoMapper(

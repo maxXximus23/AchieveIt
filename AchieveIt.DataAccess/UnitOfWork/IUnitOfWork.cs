@@ -12,6 +12,7 @@ namespace AchieveIt.DataAccess.UnitOfWork
         public ISubjectRepository Subjects { get; }
         
         public IRefreshTokenRepository RefreshTokens { get; }
+        public IForumRepository Forums { get; }
 
         public Task SaveChanges();
     }

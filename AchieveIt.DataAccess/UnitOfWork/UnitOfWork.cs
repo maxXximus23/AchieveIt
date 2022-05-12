@@ -10,6 +10,7 @@ namespace AchieveIt.DataAccess.UnitOfWork
         private IGroupRepository _group;
         private ISubjectRepository _subject;
         private IRefreshTokenRepository _refreshTokens;
+        private IForumRepository _forums;
         private readonly DatabaseContext _context;
 
         public UnitOfWork(DatabaseContext context)
@@ -66,6 +67,19 @@ namespace AchieveIt.DataAccess.UnitOfWork
                 }
 
                 return _refreshTokens;
+            }
+        }
+
+        public IForumRepository Forums
+        {
+            get
+            {
+                if (_forums is null)
+                {
+                    _forums = new ForumRepository(_context);
+                }
+
+                return _forums;
             }
         }
 
