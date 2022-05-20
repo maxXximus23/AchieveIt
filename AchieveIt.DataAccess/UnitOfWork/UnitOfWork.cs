@@ -9,6 +9,8 @@ namespace AchieveIt.DataAccess.UnitOfWork
         private IUsersRepository _users;
         private IGroupRepository _group;
         private ISubjectRepository _subject;
+        private IHomeworkRepository _homework;
+        private IHomeworkAttachmentRepository _homeworkAttachment;
         private IRefreshTokenRepository _refreshTokens;
         private readonly DatabaseContext _context;
 
@@ -56,6 +58,32 @@ namespace AchieveIt.DataAccess.UnitOfWork
             }
         }
 
+        public IHomeworkRepository Homeworks
+        {
+            get
+            {
+                if (_homework is null)
+                {
+                    _homework = new HomeworkRepository(_context);
+                }
+
+                return _homework;
+            }
+        }
+
+        public IHomeworkAttachmentRepository HomeworkAttachment
+        {
+            get
+            {
+                if (_homeworkAttachment is null)
+                {
+                    _homeworkAttachment = new HomeworkAttachmentRepository(_context);
+                }
+
+                return _homeworkAttachment;
+            }
+        }
+        
         public IRefreshTokenRepository RefreshTokens
         {
             get

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AchieveIt.DataAccess.Entities;
 using AchieveIt.DataAccess.Repositories.Contracts;
@@ -39,6 +40,16 @@ namespace AchieveIt.DataAccess.Repositories
                        .Include(subject => subject.AssistTeacher)
                        .FirstOrDefaultAsync(subject => subject.Id == id)
                    ?? throw new NotFoundException($"Subject with id {id} has not found.");
+        }
+
+        public async Task<IReadOnlyCollection<Homework>> GetAllSubjectHomeworksById(int subjectId)
+        {
+            return await _context.Homeworks
+                .AsNoTracking()
+                .Where(subject => subject.Id == subjectId)
+                .Include(subject => subject.Attachments)
+                .ThenInclude(attachment => attachment.FileAttachment)
+                .ToArrayAsync();
         }
 
         public void UpdateSubject(Subject subject)

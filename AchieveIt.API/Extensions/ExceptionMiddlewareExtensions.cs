@@ -25,6 +25,9 @@ namespace AchieveIt.API.Extensions
                 case ValidationException:
                     SetExceptionResult(context, exception, HttpStatusCode.BadRequest);
                     break;
+                case UnauthorizedAccessException:
+                    SetExceptionResult(context, exception, HttpStatusCode.Forbidden);
+                    break;
                 default:
                     SetExceptionResult(context, exception, HttpStatusCode.InternalServerError);
                     break;

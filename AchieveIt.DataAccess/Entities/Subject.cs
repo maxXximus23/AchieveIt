@@ -1,4 +1,6 @@
-﻿namespace AchieveIt.DataAccess.Entities
+﻿using System.Collections.Generic;
+
+namespace AchieveIt.DataAccess.Entities
 {
     public class Subject : EntityBase<int>
     {
@@ -19,5 +21,12 @@
         public Teacher AssistTeacher { get; set; }
         
         public string IconUrl { get; set; }
+
+        public ICollection<Homework> Homeworks { get; set; }
+
+        public Subject()
+        {
+            Homeworks = new List<Homework>();
+        }
     }
 }
