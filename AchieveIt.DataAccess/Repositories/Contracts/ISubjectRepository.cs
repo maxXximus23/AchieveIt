@@ -9,6 +9,8 @@ namespace AchieveIt.DataAccess.Repositories.Contracts
         public Task CreateSubject(Subject subject);
         
         public Task<IReadOnlyCollection<Subject>> GetAllSubject();
+
+        public Task<IReadOnlyCollection<Homework>> GetAllSubjectHomeworksById(int subjectId);
         
         public Task<Subject> GetSubjectById(int id);
         
