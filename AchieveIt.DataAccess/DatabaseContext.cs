@@ -1,4 +1,5 @@
 ﻿using AchieveIt.DataAccess.Entities;
+using AchieveIt.DataAccess.Entities.Forum;
 using Microsoft.EntityFrameworkCore;
 
 namespace AchieveIt.DataAccess
@@ -15,7 +16,9 @@ namespace AchieveIt.DataAccess
         
         public DbSet<Homework> Homeworks { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        
+        public DbSet<ForumTopic> ForumTopics { get; set; }
+        public DbSet<ForumTopicComment> ForumTopicComments { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> dbContextOptions) : base(dbContextOptions)
         {
             
@@ -67,6 +70,28 @@ namespace AchieveIt.DataAccess
 
             modelBuilder.Entity<RefreshToken>(entity => {
                 entity.ToTable("RefreshToken");
+            });
+
+            modelBuilder.Entity<ForumTopic>(entity =>
+            {
+                entity.ToTable("ForumTopic");
+
+                entity.HasOne(forumTopic => forumTopic.Author)
+                      .WithMany()
+                      .HasForeignKey(forumTopic => forumTopic.AuthorId);
+            });
+            
+            modelBuilder.Entity<ForumTopicComment>(entity =>
+            {
+                entity.ToTable("ForumTopicComment");
+
+                entity.HasOne(topicComment => topicComment.Author)
+                      .WithMany()
+                      .HasForeignKey(topicComment => topicComment.AuthorId);
+                
+                entity.HasOne(topicComment => topicComment.ForumTopic)
+                      .WithMany(topic => topic.Comments)
+                      .HasForeignKey(topicComment => topicComment.ForumTopicId);
             });
             
             modelBuilder.Entity<User>()

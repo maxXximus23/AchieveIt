@@ -16,6 +16,7 @@ namespace AchieveIt.DataAccess.UnitOfWork
         public IHomeworkAttachmentRepository HomeworkAttachment { get; }
         
         public IRefreshTokenRepository RefreshTokens { get; }
+        public IForumRepository Forums { get; }
 
         public Task SaveChanges();
     }
