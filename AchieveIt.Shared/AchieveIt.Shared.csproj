@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Kirpichyov.FriendlyJwt" Version="1.0.3" />
       <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     </ItemGroup>
 

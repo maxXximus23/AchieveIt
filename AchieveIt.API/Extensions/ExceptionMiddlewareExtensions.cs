@@ -27,7 +27,7 @@ namespace AchieveIt.API.Extensions
                     break;
                 case UnauthorizedAccessException:
                     SetExceptionResult(context, exception, HttpStatusCode.Forbidden);
-                    break;;
+                    break;
                 default:
                     SetExceptionResult(context, exception, HttpStatusCode.InternalServerError);
                     break;

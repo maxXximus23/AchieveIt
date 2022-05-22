@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AchieveIt.BusinessLogic.Contracts;
+using AchieveIt.BusinessLogic.DTOs.Homework;
 using AchieveIt.BusinessLogic.DTOs.Subject;
 using AchieveIt.DataAccess.Entities;
 using AchieveIt.DataAccess.UnitOfWork;
@@ -15,21 +16,23 @@ namespace AchieveIt.BusinessLogic.Services
     public class SubjectService : ISubjectService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IFileService _fileService;
         private readonly IBlobService _blobService;
         private readonly IMapper _mapper;
 
-        public SubjectService(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
+        public SubjectService(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService, IFileService fileService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _blobService = blobService;
+            _fileService = fileService;
         }
 
         public async Task<SubjectDto> CreateSubject(CreateSubjectDto createSubjectDto)
         {
             Subject subject = _mapper.Map<CreateSubjectDto, Subject>(createSubjectDto);
 
-            subject.IconUrl = await UploadFile(createSubjectDto.Icon);
+            subject.IconUrl = await _fileService.UploadFile(createSubjectDto.Icon);
             await _unitOfWork.Subjects.CreateSubject(subject);
             await _unitOfWork.SaveChanges();
             
@@ -48,6 +51,12 @@ namespace AchieveIt.BusinessLogic.Services
             return _mapper.Map<Subject, DetailedSubjectDto>(subject);
         }
 
+        public async Task<IReadOnlyCollection<HomeworkDto>> GetAllSubjectHomeworksById(int subjectId)
+        {
+            var homeworks = await _unitOfWork.Subjects.GetAllSubjectHomeworksById(subjectId);
+            return _mapper.Map<IReadOnlyCollection<Homework>, IReadOnlyCollection<HomeworkDto>>(homeworks);
+        }
+
         public async Task<SubjectDto> UpdateSubject(int id, UpdateSubjectDto updateSubjectDto)
         {
             Subject subject = await _unitOfWork.Subjects.GetSubjectById(id);
@@ -55,7 +64,7 @@ namespace AchieveIt.BusinessLogic.Services
             _mapper.Map(updateSubjectDto, subject);
             if (updateSubjectDto.Icon is not null)
             {
-                subject.IconUrl = await UploadFile(updateSubjectDto.Icon);
+                subject.IconUrl = await _fileService.UploadFile(updateSubjectDto.Icon);
             }
 
             _unitOfWork.Subjects.UpdateSubject(subject);
@@ -68,15 +77,6 @@ namespace AchieveIt.BusinessLogic.Services
         {
             await _unitOfWork.Subjects.DeleteSubject(id);
             await _unitOfWork.SaveChanges();
-        }
-        
-        private async Task<string> UploadFile(IFormFile avatar)
-        {
-            string fileName = avatar.FileName.Unidecode();
-            string blobName = await _blobService.UploadFileBlobAsync(avatar, "avatars", true, fileName);
-            string avatarUrl = _blobService.GenerateSaS("avatars", blobName, DateTime.MaxValue, BlobSasPermissions.Read);
-
-            return avatarUrl;
         }
     }
 }
