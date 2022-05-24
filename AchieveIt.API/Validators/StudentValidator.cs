@@ -15,7 +15,7 @@ namespace AchieveIt.API.Validators
                 .NotEmpty().WithMessage("Email is required.");
             RuleFor(student => student.Name)
                 .NotEmpty().WithMessage("Name is required.");
-            RuleFor(student => student.Group)
+            RuleFor(student => student.GroupId)
                 .NotEmpty().WithMessage("Group is required.");
             RuleFor(student => student.Password)
                 .MinimumLength(4)

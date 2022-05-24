@@ -27,9 +27,9 @@ namespace AchieveIt.DataAccess.Repositories
                                                   $"{homeworkAttachmentId} has not found.");
         }
 
-        public void DeleteFileAttachments(FileAttachment fileAttachment)
+        public void DeleteFileAttachments(params FileAttachment[] fileAttachment)
         {
-            _context.FileAttachments.Remove(fileAttachment);
+            _context.FileAttachments.RemoveRange(fileAttachment);
         }
     }
 }

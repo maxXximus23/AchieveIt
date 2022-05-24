@@ -1,4 +1,5 @@
 ﻿using AchieveIt.BusinessLogic.DTOs.Homework;
+using AchieveIt.BusinessLogic.DTOs.Homework.Completion;
 using AchieveIt.DataAccess.Entities;
 using AutoMapper;
 
@@ -9,7 +10,15 @@ namespace AchieveIt.BusinessLogic.Profiles
         public HomeworkProfile()
         {
             CreateMap<Homework, HomeworkDto>().ReverseMap();
+            CreateMap<HomeworkCompletion, HomeworkCompletionDto>().ReverseMap();
             CreateMap<HomeworkFileAttachment, FileAttachment>()
+                .ForMember(homeworkFileAttachment => homeworkFileAttachment.Url, 
+                    rule => rule.MapFrom(fileAttachment => fileAttachment.FileAttachment.Url))
+                .ForMember(homeworkFileAttachment => homeworkFileAttachment.OriginalName, 
+                    rule => rule.MapFrom(fileAttachment => fileAttachment.FileAttachment.OriginalName))
+                .ForMember(homeworkFileAttachment => homeworkFileAttachment.UploadTime, 
+                    rule => rule.MapFrom(fileAttachment => fileAttachment.FileAttachment.UploadTime));
+            CreateMap<CompletionAttachment, FileAttachment>()
                 .ForMember(homeworkFileAttachment => homeworkFileAttachment.Url, 
                     rule => rule.MapFrom(fileAttachment => fileAttachment.FileAttachment.Url))
                 .ForMember(homeworkFileAttachment => homeworkFileAttachment.OriginalName, 

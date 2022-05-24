@@ -9,11 +9,10 @@ namespace AchieveIt.DataAccess
         public DbSet<Group> Groups { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        
         public DbSet<FileAttachment> FileAttachments { get; set; }
-        
         public DbSet<HomeworkFileAttachment> HomeworkFileAttachments { get; set; }
-        
+        public DbSet<HomeworkCompletion> HomeworkCompletions { get; set; }
+        public DbSet<CompletionAttachment> CompletionAttachments { get; set; }
         public DbSet<Homework> Homeworks { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<ForumTopic> ForumTopics { get; set; }
@@ -50,6 +49,14 @@ namespace AchieveIt.DataAccess
             
             modelBuilder.Entity<HomeworkFileAttachment>(entity => {
                 entity.ToTable("HomeworkFileAttachment");
+            });
+            
+            modelBuilder.Entity<HomeworkCompletion>(entity => {
+                entity.ToTable("HomeworkCompletion");
+            });
+            
+            modelBuilder.Entity<CompletionAttachment>(entity => {
+                entity.ToTable("CompletionAttachment");
             });
             
             modelBuilder.Entity<Homework>(entity => {

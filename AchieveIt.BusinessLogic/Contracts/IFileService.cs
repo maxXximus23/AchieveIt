@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AchieveIt.DataAccess.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace AchieveIt.BusinessLogic.Contracts
@@ -8,5 +9,7 @@ namespace AchieveIt.BusinessLogic.Contracts
         public Task<string> UploadFile(IFormFile file);
 
         public Task<string> UploadAvatar(IFormFile file);
+
+        public Task<FileAttachment> CreateAttachment(IFormFile homeworkAttachment);
     }
 }

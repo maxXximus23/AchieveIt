@@ -14,7 +14,7 @@ namespace AchieveIt.API.Models
         
         public string Password { get; set; }
         
-        public string Group { get; set; }
+        public int? GroupId { get; set; }
         
         public DateTime Birthday { get; set; }
     }

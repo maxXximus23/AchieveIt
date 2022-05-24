@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AchieveIt.BusinessLogic.Contracts;
+using AchieveIt.DataAccess.Entities;
 using AchieveIt.Shared.Constants;
 using Azure.Storage.Sas;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,18 @@ namespace AchieveIt.BusinessLogic.Services
         public async Task<string> UploadFile(IFormFile file)
         {
             return await UploadFile(file, FileConstants.File);
+        }
+        
+               
+        public async Task<FileAttachment> CreateAttachment(IFormFile homeworkAttachment)
+        {
+            string url = await UploadFile(homeworkAttachment);
+            return new FileAttachment
+            {
+                Url = url, 
+                OriginalName = homeworkAttachment.FileName, 
+                UploadTime = DateTime.UtcNow
+            };
         }
 
         private async Task<string> UploadFile(IFormFile file, string containerName, bool inline = false)
