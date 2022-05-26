@@ -37,7 +37,7 @@ namespace AchieveIt.BusinessLogic.Services
             Homework homework = _mapper.Map<CreateHomeworkDto, Homework>(createHomeworkDto);
 
             Task<FileAttachment>[] uploadTasks = createHomeworkDto.Attachments
-                .Select(CreateAttachment)
+                .Select(_fileService.CreateAttachment)
                 .ToArray();
 
             var fileAttachments = await Task.WhenAll(uploadTasks);
@@ -77,17 +77,6 @@ namespace AchieveIt.BusinessLogic.Services
         public Task<HomeworkDto> DeleteHomework(int id)
         {
             throw new System.NotImplementedException();
-        }
-        
-        private async Task<FileAttachment> CreateAttachment(IFormFile homeworkAttachment)
-        {
-            string url = await _fileService.UploadFile(homeworkAttachment);
-            return new FileAttachment
-            {
-                Url = url, 
-                OriginalName = homeworkAttachment.FileName, 
-                UploadTime = DateTime.UtcNow
-            };
         }
     }
 }

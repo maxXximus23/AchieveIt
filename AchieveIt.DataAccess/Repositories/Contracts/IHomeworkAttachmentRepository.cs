@@ -6,6 +6,6 @@ namespace AchieveIt.DataAccess.Repositories.Contracts
     public interface IHomeworkAttachmentRepository
     {
         public Task<HomeworkFileAttachment> GetHomeworkAttachmentById(int homeworkAttachmentId);
-        public void DeleteFileAttachments(FileAttachment fileAttachment);
+        public void DeleteFileAttachments(params FileAttachment[] fileAttachment);
     }
 }
