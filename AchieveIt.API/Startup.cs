@@ -44,6 +44,7 @@ namespace AchieveIt.API
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IForumService, ForumService>();
+            services.AddScoped<IAutoAchievementService, AutoAchievementService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             services.AddAutoMapper(

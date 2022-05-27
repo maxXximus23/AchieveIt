@@ -21,14 +21,16 @@ namespace AchieveIt.BusinessLogic.Services
         private readonly IFileService _fileService;
         private readonly IJwtTokenReader _jwtTokenReader;
         private readonly IMapper _mapper;
+        private readonly IAutoAchievementService _autoAchievementService;
 
         public HomeworkService(IUnitOfWork unitOfWork, IMapper mapper, IFileService fileService,
-            IJwtTokenReader jwtTokenReader)
+            IJwtTokenReader jwtTokenReader, IAutoAchievementService autoAchievementService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _fileService = fileService;
             _jwtTokenReader = jwtTokenReader;
+            _autoAchievementService = autoAchievementService;
         }
 
         public async Task<HomeworkDto> GetHomeworkById(int id)
@@ -131,6 +133,11 @@ namespace AchieveIt.BusinessLogic.Services
         public async Task<HomeworkCompletionDto> AddHomeworkCompletion(int homeworkId,
             UploadHomeworkCompletionDto uploadHomeworkCompletionDto)
         {
+            if (!uploadHomeworkCompletionDto.Files.Any())
+            {
+                throw new ValidationException("You must include at least one file.");
+            }
+            
             var homework = await _unitOfWork.Homeworks.GetHomeworkById(homeworkId, true);
             var user = await _unitOfWork.Users.GetUser<Student>(_jwtTokenReader.GetUserId());
 
@@ -165,6 +172,9 @@ namespace AchieveIt.BusinessLogic.Services
             await _unitOfWork.Homeworks.AddHomeworkCompletion(homeworkCompletion);
             await _unitOfWork.SaveChanges();
 
+            await _autoAchievementService.HandleSubmitHomeworkEvent(_jwtTokenReader.GetUserId());
+            await _autoAchievementService.HandleAddAttachmentEvent(_jwtTokenReader.GetUserId(), fileAttachments.Length);
+
             return _mapper.Map<HomeworkCompletion, HomeworkCompletionDto>(homeworkCompletion);
         }
 
@@ -181,6 +191,11 @@ namespace AchieveIt.BusinessLogic.Services
 
             homeworkCompletion.Mark = updateHomeworkDto.Mark;
             await _unitOfWork.SaveChanges();
+
+            if (updateHomeworkDto.Mark.HasValue)
+            {
+                await _autoAchievementService.HandleAssessmentEvent(homeworkCompletion.StudentId, updateHomeworkDto.Mark.Value);
+            }
 
             homeworkCompletion = await _unitOfWork.Homeworks.GetHomeworkCompletionById(homeworkCompletionId);
             return _mapper.Map<HomeworkCompletion, HomeworkCompletionDto>(homeworkCompletion);

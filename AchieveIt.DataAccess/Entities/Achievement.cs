@@ -10,5 +10,7 @@ namespace AchieveIt.DataAccess.Entities
         public string Description { get; set; }
         
         public string Url { get; set; }
+        
+        public bool IsAuto { get; set; }
     }
 }

@@ -86,5 +86,10 @@ namespace AchieveIt.DataAccess.Repositories
         {
             _context.Homeworks.Update(homework);
         }
+
+        public async Task<int> CountStudentHomeworks(int studentId)
+        {
+            return await _context.HomeworkCompletions.CountAsync(completion => completion.StudentId == studentId);
+        }
     }
 }

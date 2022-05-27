@@ -24,5 +24,7 @@ namespace AchieveIt.DataAccess.Repositories.Contracts
         public Task DeleteHomeworkById(int id);
 
         public void UpdateHomework(Homework homework);
+
+        public Task<int> CountStudentHomeworks(int studentId);
     }
 }

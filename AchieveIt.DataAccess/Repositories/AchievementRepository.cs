@@ -36,12 +36,20 @@ namespace AchieveIt.DataAccess.Repositories
         public async Task DeleteAchievementById(int achievementId)
         {
             var achievement = await GetAchievementById(achievementId);
+            if (achievement.IsAuto)
+            {
+                throw new ValidationException($"Achievement with id: {achievementId} has not found.");
+            }
             _context.Achievements.Remove(achievement);
         }
 
         public async Task DeleteStudentAchievement(int achievementId, int studentId)
         {
             var achievementUser = await GetStudentAchievement(achievementId, studentId);
+            if (achievementUser.Achievement.IsAuto)
+            {
+                throw new ValidationException($"Achievement with id: {achievementId} has not found.");
+            }
             _context.AchievementUsers.Remove(achievementUser);
         }
 

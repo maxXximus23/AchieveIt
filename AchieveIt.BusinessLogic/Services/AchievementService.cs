@@ -52,7 +52,13 @@ namespace AchieveIt.BusinessLogic.Services
             achievementUser.UserId = studentId;
 
             await _unitOfWork.Users.GetUser<Student>(achievementUser.UserId);
-            await _unitOfWork.Achievements.GetAchievementById(achievementUser.AchievementId);
+            var achievement = await _unitOfWork.Achievements.GetAchievementById(achievementUser.AchievementId);
+
+            if (achievement.IsAuto)
+            {
+                throw new ValidationException(
+                    $"Achievement with id: {achievement.Id} is already have same achievement.");
+            }
 
             await _unitOfWork.Achievements.CreateStudentAchievement(achievementUser);
             await _unitOfWork.SaveChanges();
@@ -63,6 +69,12 @@ namespace AchieveIt.BusinessLogic.Services
             int achievementId)
         {
             var achievement = await _unitOfWork.Achievements.GetAchievementById(achievementId);
+            
+            if (achievement.IsAuto)
+            {
+                throw new ValidationException(
+                    $"Achievement with id: {achievement.Id} is already have same achievement.");
+            }
 
             _mapper.Map(updateAchievementDto, achievement);
             achievement.Url = await _fileService.UploadIcon(updateAchievementDto.Icon);

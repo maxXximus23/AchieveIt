@@ -16,12 +16,14 @@ namespace AchieveIt.BusinessLogic.Services
         private readonly IJwtTokenReader _tokenReader;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IAutoAchievementService _autoAchievementService;
 
-        public ForumService(IJwtTokenReader tokenReader, IUnitOfWork unitOfWork, IMapper mapper)
+        public ForumService(IJwtTokenReader tokenReader, IUnitOfWork unitOfWork, IMapper mapper, IAutoAchievementService autoAchievementService)
         {
             _tokenReader = tokenReader;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _autoAchievementService = autoAchievementService;
         }
 
         public async Task<TopicDto> CreateTopic(CreateTopicDto dto)
@@ -33,6 +35,8 @@ namespace AchieveIt.BusinessLogic.Services
             _unitOfWork.Forums.AddTopic(topic);
             await _unitOfWork.SaveChanges();
 
+            await _autoAchievementService.HandleCreateForumTopicEvent(_tokenReader.GetUserId());
+            
             return _mapper.Map<ForumTopic, TopicDto>(topic);
         }
 
@@ -72,6 +76,8 @@ namespace AchieveIt.BusinessLogic.Services
             topic.Comments.Add(comment);
             await _unitOfWork.SaveChanges();
 
+            await _autoAchievementService.HandleCreateForumCommentEvent(_tokenReader.GetUserId());
+            
             return _mapper.Map<ForumTopicComment, TopicCommentDto>(comment);
         }
 
