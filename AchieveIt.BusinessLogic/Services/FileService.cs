@@ -23,6 +23,11 @@ namespace AchieveIt.BusinessLogic.Services
             return await UploadFile(file, FileConstants.Avatar, true);
         }
         
+        public async Task<string> UploadIcon(IFormFile file)
+        {
+            return await UploadFile(file, FileConstants.Icon, true);
+        }
+        
         public async Task<string> UploadFile(IFormFile file)
         {
             return await UploadFile(file, FileConstants.File);

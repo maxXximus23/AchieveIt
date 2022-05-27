@@ -10,6 +10,7 @@ namespace AchieveIt.DataAccess.UnitOfWork
         private IGroupRepository _group;
         private ISubjectRepository _subject;
         private IHomeworkRepository _homework;
+        private IAchievementRepository _achievement;
         private IHomeworkAttachmentRepository _homeworkAttachment;
         private IRefreshTokenRepository _refreshTokens;
         private IForumRepository _forums;
@@ -69,6 +70,19 @@ namespace AchieveIt.DataAccess.UnitOfWork
                 }
 
                 return _homework;
+            }
+        }
+
+        public IAchievementRepository Achievements
+        {
+            get
+            {
+                if (_achievement is null)
+                {
+                    _achievement = new AchievementRepository(_context);
+                }
+
+                return _achievement;
             }
         }
 

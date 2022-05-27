@@ -38,6 +38,7 @@ namespace AchieveIt.API
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITeacherService, TeacherService>();
             services.AddScoped<IHomeworkService, HomeworkService>();
+            services.AddScoped<IAchievementService, AchievementService>();
             services.AddScoped<IHomeworkAttachmentService, HomeworkAttachmentService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<ISubjectService, SubjectService>();

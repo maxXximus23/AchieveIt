@@ -13,6 +13,8 @@ namespace AchieveIt.DataAccess.UnitOfWork
         
         public IHomeworkRepository Homeworks { get; }
         
+        public IAchievementRepository Achievements { get; }
+        
         public IHomeworkAttachmentRepository HomeworkAttachment { get; }
         
         public IRefreshTokenRepository RefreshTokens { get; }

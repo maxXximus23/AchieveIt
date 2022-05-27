@@ -9,6 +9,8 @@ namespace AchieveIt.DataAccess
         public DbSet<Group> Groups { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Achievement> Achievements { get; set; }
+        public DbSet<AchievementUser> AchievementUsers { get; set; }
         public DbSet<FileAttachment> FileAttachments { get; set; }
         public DbSet<HomeworkFileAttachment> HomeworkFileAttachments { get; set; }
         public DbSet<HomeworkCompletion> HomeworkCompletions { get; set; }
@@ -43,6 +45,11 @@ namespace AchieveIt.DataAccess
                 entity.ToTable("Subject");
             });
             
+            modelBuilder.Entity<Achievement>(entity => {
+                entity.ToTable("Achievement");
+                entity.Property(achievement => achievement.Url).HasColumnName("IconUrl");
+            });
+            
             modelBuilder.Entity<FileAttachment>(entity => {
                 entity.ToTable("FileAttachment");
             });
@@ -57,6 +64,10 @@ namespace AchieveIt.DataAccess
             
             modelBuilder.Entity<CompletionAttachment>(entity => {
                 entity.ToTable("CompletionAttachment");
+            });
+            
+            modelBuilder.Entity<AchievementUser>(entity => {
+                entity.ToTable("AchievementUser");
             });
             
             modelBuilder.Entity<Homework>(entity => {
