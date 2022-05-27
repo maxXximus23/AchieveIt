@@ -26,7 +26,7 @@ namespace AchieveIt.DataAccess.Repositories
         where TUser : User
         {
             return await _context.Users.OfType<TUser>().FirstOrDefaultAsync(user => user.Id == id)
-                ?? throw new NotFoundException($"User with id {id} has not found.");
+                ?? throw new NotFoundException($"{typeof(TUser).Name} with id {id} has not found.");
         }
 
         public async Task<TUser> GetUserByEmail<TUser>(string email)

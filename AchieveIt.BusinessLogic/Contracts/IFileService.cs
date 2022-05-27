@@ -9,6 +9,8 @@ namespace AchieveIt.BusinessLogic.Contracts
         public Task<string> UploadFile(IFormFile file);
 
         public Task<string> UploadAvatar(IFormFile file);
+        
+        public Task<string> UploadIcon(IFormFile file);
 
         public Task<FileAttachment> CreateAttachment(IFormFile homeworkAttachment);
     }
